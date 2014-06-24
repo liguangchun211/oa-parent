@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/oa"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="diqiu"></property>
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>
+				<prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>	
+				<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>			
+			</props>
+		</property>		
+		<property name="packagesToScan">
+			<list>
+				<value>org.oa.model</value>
+			</list>
+		</property>
+		<!-- <property name="annotatedClasses">
+			<list>
+				<value>com.lib.entity.User</value>
+				<value>com.lib.entity.Admin</value>
+				<value>com.lib.entity.Role</value>
+				<value>com.lib.entity.Demo</value>
+			</list>
+		</property>		 -->
+	</bean>	
+	
+	<!-- 配置一个事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+ 	<!--定义Spring的事务拦截器TransactionInterceptor -->
+	<!--  <bean id="transactionInterceptor"	class="org.springframework.transaction.interceptor.TransactionInterceptor"> -->
+	    <!--  依赖注入上面定义的事务管理器transactionManager
+        <property name="transactionManager" ref="transactionManager"/>
+      	定义需要进行事务拦截的方法及所采用的事务控制类型    	
+    	<property name="transactionAttributes">		    
+		    <props>
+			    以browse、list、load、get及is开头的所有方法采用只读型事务控制类型
+			    <prop key="browse*">PROPAGATION_REQUIRED,readOnly</prop>
+			    <prop key="list*">PROPAGATION_REQUIRED,readOnly</prop>
+			    <prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>
+			    <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+			    <prop key="is*">PROPAGATION_REQUIRED,readOnly</prop>
+			    <prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>  
+	            <prop key="modify*">PROPAGATION_REQUIRED,-myException</prop>  
+	            <prop key="del*">PROPAGATION_REQUIRED</prop>  
+			    所有方法均进行事务控制，如果当前没有事务，则新建一个事务
+		    	<prop key="*">PROPAGATION_REQUIRED</prop>
+		    </props>
+	    </property>
+	</bean>
+	--> 
+	<!-- 定义BeanNameAutoProxyCreator进行Spring的事务处理-->
+	<!-- <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+	     针对指定的bean自动生成业务代理
+	    <property name="beanNames"> 
+            <list>
+                <value>adminService</value>
+                <value>demoService</value>
+                <value>bookService</value>
+                <value>userService</value>
+                <value>columnsService</value>
+                <value>newsService</value>
+                <value>crawlService</value>
+                <value>memberLevelService</value>
+                <value>memberService</value>
+                <value>categoryService</value>
+                <value>merService</value>
+                <value>cartService</value>
+                <value>ordersService</value>
+                <value>trafficService</value>
+            </list>
+	    </property>
+	     这个属性为true时，表示被代理的是目标类本身而不是目标类的接口
+	    <property name="proxyTargetClass">
+	    	<value>false</value>
+	    </property>
+        依赖注入上面定义的事务拦截器transactionInterceptor
+        <property name="interceptorNames">
+            <list>
+                <value>transactionInterceptor</value> 
+            </list>
+        </property>
+    </bean>	
+	 -->
+	
+	<!-- 配置事务，使用代理的方式 -->
+	<!-- <bean id="transactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">  
+	    <property name="transactionManager" ref="transactionManager"></property>  
+	    <property name="transactionAttributes">  
+	        <props>  
+	            <prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>  
+	            <prop key="modify*">PROPAGATION_REQUIRED,-myException</prop>  
+	            <prop key="del*">PROPAGATION_REQUIRED</prop>  
+	            <prop key="*">PROPAGATION_REQUIRED</prop>  
+	        </props>
+	    </property>
+	</bean> 
+	
+	<bean id="adminServiceMgr" parent="transactionProxy" >
+		<property name="target" ref="adminService"></property> 
+	</bean>
+	<bean id="bookServiceMgr" parent="transactionProxy" >
+		<property name="target" ref="bookService"></property> 
+	</bean>
+	<bean id="demoServiceMgr" parent="transactionProxy" >
+		<property name="target" ref="demoService"></property> 
+	</bean> -->
+</beans>
