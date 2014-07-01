@@ -28,5 +28,11 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Administrator/Desktop/json-lib-2.4-jdk15.jar所需全部JAR包/json-lib-2.4-jdk15.jar所需全部JAR包/commons-beanutils-1.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrator/Desktop/json-lib-2.4-jdk15.jar所需全部JAR包/json-lib-2.4-jdk15.jar所需全部JAR包/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrator/Desktop/json-lib-2.4-jdk15.jar所需全部JAR包/json-lib-2.4-jdk15.jar所需全部JAR包/commons-lang-2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrator/Desktop/json-lib-2.4-jdk15.jar所需全部JAR包/json-lib-2.4-jdk15.jar所需全部JAR包/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrator/Desktop/json-lib-2.4-jdk15.jar所需全部JAR包/json-lib-2.4-jdk15.jar所需全部JAR包/ezmorph-1.0.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrator/Desktop/json-lib-2.4-jdk15.jar所需全部JAR包/json-lib-2.4-jdk15.jar所需全部JAR包/json-lib-2.4.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
